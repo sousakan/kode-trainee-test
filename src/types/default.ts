@@ -1,4 +1,5 @@
 export type DepartmentType =
+  | 'all'
   | 'android'
   | 'ios'
   | 'design'

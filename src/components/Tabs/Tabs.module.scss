@@ -1,0 +1,26 @@
+.tabs {
+  display: flex;
+}
+
+.tabs__item {
+  cursor: pointer;
+
+  padding: 8px 12px;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: #97979b;
+
+  transition: color 0.2s linear;
+
+  &:hover {
+    color: #737375;
+  }
+}
+
+.tabs__item.active {
+  font-weight: 600;
+  color: var(--black);
+
+  border-bottom: 2px solid var(--purple);
+}

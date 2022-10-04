@@ -1,6 +1,7 @@
 import { DepartmentType, SortType } from './default';
 
 export const departmentText: Record<DepartmentType, string> = {
+  all: 'Все',
   android: 'Android',
   ios: 'iOS',
   design: 'Дизайн',
