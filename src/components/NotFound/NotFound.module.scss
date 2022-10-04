@@ -1,0 +1,31 @@
+.notfound__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 40%;
+  margin: 0 auto;
+  padding-top: 20vh;
+}
+
+.notfound__img {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+}
+
+.notfound__title {
+  margin-bottom: 12px;
+
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.notfound__text {
+  margin-bottom: 12px;
+
+  font-size: 16px;
+  font-weight: 400;
+  color: #97979b;
+}
