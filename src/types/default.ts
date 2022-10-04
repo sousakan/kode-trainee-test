@@ -19,9 +19,13 @@ export interface User {
   avatarUrl: string;
   firstName: string;
   lastName: string;
-  userTag: [string, string];
+  userTag: string;
   department: DepartmentType;
   position: string;
   birthday: string;
   phone: string;
+}
+
+export interface BackendResponse {
+  items: User[];
 }

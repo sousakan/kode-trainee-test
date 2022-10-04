@@ -1,17 +1,21 @@
 import axios from './axios';
 
-import { DepartmentType, User } from '../types/default';
+import { BackendResponse, DepartmentType, User } from '../types/default';
 
 export const getAll = async () => {
-  const { data: users } = await axios.get<User[]>('users?__dynamic=true');
+  const { data } = await axios.get<BackendResponse>('users?__dynamic=true');
+
+  const users = data.items;
 
   return users;
 };
 
 export const getByDepartment = async (dep: DepartmentType) => {
-  const { data: users } = await axios.get<User[]>(
+  const { data } = await axios.get<BackendResponse>(
     `users?__dynamic=true&__example=${dep}`,
   );
+
+  const users = data.items;
 
   return users;
 };
