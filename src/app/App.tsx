@@ -5,6 +5,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
+import './App.module.scss';
+
 const router = createBrowserRouter(
   createRoutesFromElements(<Route path="/" element={'main page'} />),
 );
