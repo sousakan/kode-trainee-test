@@ -1,0 +1,86 @@
+.sort-modal {
+  position: fixed;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.sort-modal__overlay {
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(5 5 16 / 16%);
+}
+
+.sort-modal__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 373px;
+  padding: 20px 16px 8px;
+
+  background-color: var(--white);
+  border-radius: 20px;
+}
+
+.sort-modal__header {
+  position: relative;
+}
+
+.sort-modal__title {
+  margin-bottom: 16px;
+
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--black);
+  text-align: center;
+}
+
+.sort-modal__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sort-modal__item {
+  display: flex;
+  align-items: center;
+
+  padding: 12px 0;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.sort-modal__radio-button {
+  margin-right: 14px;
+}
+
+.sort-modal__close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: #f7f7f8;
+  border-radius: 50%;
+
+  transition: background-color 0.2s linear;
+
+  &:hover {
+    background-color: #efefef;
+  }
+}
+
+.sort-modal__close-icon {
+  width: 10px;
+  height: 10px;
+}
