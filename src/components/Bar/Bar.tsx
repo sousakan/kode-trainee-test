@@ -4,7 +4,7 @@ import styles from './Bar.module.scss';
 
 interface Props {
   className?: string;
-  imgUrl: string;
+  avatarUrl: string;
   firstName: string;
   lastName: string;
   userTag: string;
@@ -14,7 +14,7 @@ interface Props {
 
 const Bar = ({
   className,
-  imgUrl,
+  avatarUrl,
   firstName,
   lastName,
   userTag,
@@ -24,7 +24,7 @@ const Bar = ({
 
   return (
     <div className={barClasses}>
-      <img className={styles.bar__img} src={imgUrl} alt="avatar" />
+      <img className={styles.bar__img} src={avatarUrl} alt="avatar" />
       <div className={styles.bar__info}>
         <h3 className={styles.bar__name}>
           {`${firstName} ${lastName}`}{' '}
