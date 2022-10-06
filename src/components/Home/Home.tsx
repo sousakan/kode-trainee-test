@@ -1,17 +1,31 @@
 import styles from './Home.module.scss';
 
-import { User } from '../../types/default';
+import {
+  selectLoadingStatus,
+  selectUsers,
+} from '../../features/Home/selectors';
+import { useAppSelector } from '../../hooks/redux';
 import Bar from '../Bar';
 import Container from '../Container';
+import Error from '../Error';
 import Search from '../Search';
+import SkeletonBar from '../SkeletonBar';
 import Tabs from '../Tabs';
 
-interface Props {
-  users: User[];
-}
+const Home = () => {
+  const users = useAppSelector(selectUsers);
+  const loadingStatus = useAppSelector(selectLoadingStatus);
 
-const Home = ({ users }: Props) => {
-  const bars = users.map((user) => <Bar key={user.id} {...user} />);
+  const content =
+    loadingStatus !== 'failed' ? (
+      <main className={styles.home__users}>
+        {users.length
+          ? users.map((user) => <Bar key={user.id} {...user} />)
+          : new Array(10).fill(0).map((_, idx) => <SkeletonBar key={idx} />)}
+      </main>
+    ) : (
+      <Error />
+    );
 
   return (
     <Container>
@@ -21,7 +35,7 @@ const Home = ({ users }: Props) => {
           <Search className={styles.home__search} />
           <Tabs />
         </header>
-        <main className={styles.home__users}>{bars}</main>
+        {content}
       </div>
     </Container>
   );
