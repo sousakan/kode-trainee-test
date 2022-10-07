@@ -47,7 +47,8 @@ export const homeSlice = createSlice({
     });
 
     builder.addCase(fetchUsersByDep.rejected, (state, action) => {
-      state.loadingStatus = 'failed';
+      state.loadingStatus =
+        action.error.message !== 'Aborted' ? 'failed' : 'pending';
     });
   },
 });

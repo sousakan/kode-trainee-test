@@ -1,4 +1,6 @@
+import { AsyncThunkAction } from '@reduxjs/toolkit';
 import classNames from 'classnames';
+
 import { useState } from 'react';
 
 import styles from './Tabs.module.scss';
@@ -8,12 +10,15 @@ import { selectActiveTab } from '../../features/Home/selectors';
 
 import { setActiveTab } from '../../features/Home/slice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { DepartmentType } from '../../types/default';
+import { DepartmentType, User } from '../../types/default';
 import { departmentText } from '../../types/text';
 
 const tabs = Object.keys(departmentText) as DepartmentType[];
 
 const Tabs = () => {
+  const [fetchPromise, setFetchPromise] = useState<
+    ReturnType<AsyncThunkAction<User[], string, {}>> | undefined
+  >();
   const activeTab = useAppSelector(selectActiveTab);
   const dispatch = useAppDispatch();
 
@@ -28,8 +33,14 @@ const Tabs = () => {
 
       if (activeTab === tab) return;
 
-      if (tab !== 'all') dispatch(fetchUsersByDep(tab));
-      else dispatch(fetchUsersByDep('all'));
+      if (fetchPromise) fetchPromise.abort();
+
+      const promise =
+        tab !== 'all'
+          ? dispatch(fetchUsersByDep(tab))
+          : dispatch(fetchUsersByDep('all'));
+
+      setFetchPromise(promise);
     };
 
     return (
