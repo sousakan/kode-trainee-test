@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { fetchUsers, fetchUsersByDep } from './asyncActions';
+import { fetchUsersByDep } from './asyncActions';
 
 import { DepartmentType, SortType, User } from '../../types/default';
 
@@ -37,19 +37,6 @@ export const homeSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchUsers.pending, (state, action) => {
-      state.loadingStatus = 'pending';
-    });
-
-    builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
-      state.loadingStatus = 'success';
-    });
-
-    builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.loadingStatus = 'failed';
-    });
-
     builder.addCase(fetchUsersByDep.pending, (state, action) => {
       state.loadingStatus = 'pending';
     });

@@ -1,13 +1,13 @@
 import styles from './Error.module.scss';
 
 import errorImg from '../../assets/images/error_page_image.png';
-import { fetchUsers } from '../../features/Home/asyncActions';
+import { fetchUsersByDep } from '../../features/Home/asyncActions';
 import { useAppDispatch } from '../../hooks/redux';
 
 const Error = () => {
   const dispatch = useAppDispatch();
 
-  const onClick = () => dispatch(fetchUsers());
+  const onClick = () => dispatch(fetchUsersByDep('all'));
 
   return (
     <div className={styles.error}>

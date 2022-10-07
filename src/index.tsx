@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import App from './app/App';
 
 import { setupStore } from './app/store';
-import { fetchUsers } from './features/Home/asyncActions';
+import { fetchUsersByDep } from './features/Home/asyncActions';
 
 const store = setupStore();
 
-store.dispatch(fetchUsers());
+store.dispatch(fetchUsersByDep('all'));
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

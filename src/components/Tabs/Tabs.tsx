@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import styles from './Tabs.module.scss';
 
-import { fetchUsers, fetchUsersByDep } from '../../features/Home/asyncActions';
+import { fetchUsersByDep } from '../../features/Home/asyncActions';
 import { selectActiveTab } from '../../features/Home/selectors';
 
 import { setActiveTab } from '../../features/Home/slice';
@@ -29,7 +29,7 @@ const Tabs = () => {
       if (activeTab === tab) return;
 
       if (tab !== 'all') dispatch(fetchUsersByDep(tab));
-      else dispatch(fetchUsers());
+      else dispatch(fetchUsersByDep('all'));
     };
 
     return (
