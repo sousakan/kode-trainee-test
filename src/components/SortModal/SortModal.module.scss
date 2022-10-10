@@ -1,8 +1,16 @@
 .sort-modal {
   position: fixed;
+  top: 0;
+  left: 0;
+
+  display: none;
 
   width: 100vw;
   height: 100vh;
+}
+
+.sort-modal.active {
+  display: block;
 }
 
 .sort-modal__overlay {
@@ -44,6 +52,8 @@
 }
 
 .sort-modal__item {
+  user-select: none;
+
   display: flex;
   align-items: center;
 

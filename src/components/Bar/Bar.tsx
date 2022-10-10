@@ -2,6 +2,10 @@ import classNames from 'classnames';
 
 import styles from './Bar.module.scss';
 
+import { selectSortType } from '../../features/Home/selectors';
+import getShortBirthDate from '../../helpers/getShortBirthDate';
+import { useAppSelector } from '../../hooks/redux';
+
 interface Props {
   className?: string;
   avatarUrl: string;
@@ -9,6 +13,7 @@ interface Props {
   lastName: string;
   userTag: string;
   position: string;
+  birthday: string;
   onClick?: React.MouseEventHandler;
 }
 
@@ -19,8 +24,15 @@ const Bar = ({
   lastName,
   userTag,
   position,
+  birthday,
 }: Props) => {
   const barClasses = classNames(styles.bar, className);
+  const sortType = useAppSelector(selectSortType);
+  const shortBirthDate = getShortBirthDate(birthday);
+
+  const spanWithDate = (
+    <span className={styles.bar__birthday}>{shortBirthDate}</span>
+  );
 
   return (
     <div className={barClasses}>
@@ -32,6 +44,7 @@ const Bar = ({
         </h3>
         <span className={styles.bar__position}>{position}</span>
       </div>
+      {sortType === 'birthday' && spanWithDate}
     </div>
   );
 };

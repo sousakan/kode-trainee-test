@@ -11,7 +11,8 @@ interface Initial {
   users: User[];
   searchValue: string;
   activeTab: DepartmentType;
-  sort: SortType;
+  sortType: SortType;
+  isModalOpen: boolean;
 }
 
 const initialState: Initial = {
@@ -19,7 +20,8 @@ const initialState: Initial = {
   users: [],
   searchValue: '',
   activeTab: 'all',
-  sort: 'alphabetical',
+  sortType: 'alphabetical',
+  isModalOpen: false,
 };
 
 export const homeSlice = createSlice({
@@ -34,6 +36,12 @@ export const homeSlice = createSlice({
     },
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
+    },
+    setSortType(state, action: PayloadAction<SortType>) {
+      state.sortType = action.payload;
+    },
+    setIdModalOpen(state, action: PayloadAction<boolean>) {
+      state.isModalOpen = action.payload;
     },
   },
   extraReducers(builder) {
@@ -55,4 +63,10 @@ export const homeSlice = createSlice({
 
 export default homeSlice.reducer;
 
-export const { setUsers, setActiveTab, setSearchValue } = homeSlice.actions;
+export const {
+  setUsers,
+  setActiveTab,
+  setSearchValue,
+  setSortType,
+  setIdModalOpen,
+} = homeSlice.actions;

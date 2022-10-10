@@ -1,11 +1,12 @@
 import styles from './Home.module.scss';
 
 import {
-  selectActiveTab,
   selectLoadingStatus,
   selectSearchValue,
+  selectSortType,
   selectUsers,
 } from '../../features/Home/selectors';
+import separateUsers from '../../helpers/separateUsers';
 import sortUsers from '../../helpers/sortUsers';
 import { useAppSelector } from '../../hooks/redux';
 import Bar from '../Bar';
@@ -13,7 +14,9 @@ import Container from '../Container';
 import Error from '../Error';
 import NotFound from '../NotFound';
 import Search from '../Search';
+import Separator from '../Separator';
 import SkeletonBar from '../SkeletonBar';
+import SortModal from '../SortModal';
 import Tabs from '../Tabs';
 
 interface WrapperProps {
@@ -22,16 +25,19 @@ interface WrapperProps {
 
 const Wrapper = ({ children }: WrapperProps) => {
   return (
-    <Container>
-      <div className={styles.home}>
-        <header className={styles.home__header}>
-          <h1 className={styles.home__title}>Поиск</h1>
-          <Search className={styles.home__search} />
-          <Tabs />
-        </header>
-        <main className={styles.home__users}>{children}</main>
-      </div>
-    </Container>
+    <>
+      <Container>
+        <div className={styles.home}>
+          <header className={styles.home__header}>
+            <h1 className={styles.home__title}>Поиск</h1>
+            <Search className={styles.home__search} />
+            <Tabs />
+          </header>
+          <main className={styles.home__users}>{children}</main>
+        </div>
+      </Container>
+      <SortModal />
+    </>
   );
 };
 
@@ -39,6 +45,10 @@ const Home = () => {
   const users = useAppSelector(selectUsers);
   const loadingStatus = useAppSelector(selectLoadingStatus);
   const searchValue = useAppSelector(selectSearchValue);
+  const sortType = useAppSelector(selectSortType);
+
+  let sortedUsers;
+  let bars;
 
   if (loadingStatus === 'pending')
     return (
@@ -63,8 +73,31 @@ const Home = () => {
       </Wrapper>
     );
 
-  const sortedUsers = sortUsers(users, searchValue);
-  const bars = sortedUsers.map((user) => <Bar key={user.id} {...user} />);
+  sortedUsers = sortUsers(users, searchValue, sortType);
+
+  if (sortType === 'birthday') {
+    const [thisYearUsers, nextYearUsers] = separateUsers(sortedUsers);
+    const thisYearBars = thisYearUsers.map((user) => (
+      <Bar key={user.id} {...user} />
+    ));
+    const nextYearBars = nextYearUsers.map((user) => (
+      <Bar key={user.id} {...user} />
+    ));
+
+    return (
+      <Wrapper>
+        <>
+          {thisYearBars}
+          {thisYearBars.length !== 0 && nextYearUsers.length !== 0 && (
+            <Separator />
+          )}
+          {nextYearUsers.length !== 0 && nextYearBars}
+        </>
+      </Wrapper>
+    );
+  }
+
+  bars = sortedUsers.map((user) => <Bar key={user.id} {...user} />);
 
   return <Wrapper>{bars}</Wrapper>;
 };

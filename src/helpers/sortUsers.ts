@@ -1,7 +1,16 @@
-import sortBySearchValue from './sortBySearchValue';
+import filterBySearchValue from './sortBySearchValue';
 
-import { User } from '../types/default';
+import sortBySortType from './sortBySortType';
 
-export default function sortUsers(users: User[], searchValue: string) {
-  return sortBySearchValue(users, searchValue);
+import { SortType, User } from '../types/default';
+
+export default function sortUsers(
+  users: User[],
+  searchValue: string,
+  sortType: SortType,
+) {
+  const sortedByValue = filterBySearchValue(users, searchValue);
+  const sortedByValueAndType = sortBySortType(sortedByValue, sortType);
+
+  return sortedByValueAndType;
 }
