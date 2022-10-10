@@ -78,10 +78,10 @@ const Home = () => {
   if (sortType === 'birthday') {
     const [thisYearUsers, nextYearUsers] = separateUsers(sortedUsers);
     const thisYearBars = thisYearUsers.map((user) => (
-      <Bar key={user.id} {...user} />
+      <Bar key={user.id} user={user} />
     ));
     const nextYearBars = nextYearUsers.map((user) => (
-      <Bar key={user.id} {...user} />
+      <Bar key={user.id} user={user} />
     ));
 
     return (
@@ -97,7 +97,7 @@ const Home = () => {
     );
   }
 
-  bars = sortedUsers.map((user) => <Bar key={user.id} {...user} />);
+  bars = sortedUsers.map((user) => <Bar key={user.id} user={user} />);
 
   return <Wrapper>{bars}</Wrapper>;
 };
