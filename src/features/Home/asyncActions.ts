@@ -12,7 +12,5 @@ export const fetchUsersByDep = createAsyncThunk<
     state: RootState;
   }
 >('home/fetchUsersByDep', (dep, thunkAPI) => {
-  if (dep === 'all') return api.users.getAll(thunkAPI.signal);
-
   return api.users.getByDepartment(dep, thunkAPI.signal);
 });
