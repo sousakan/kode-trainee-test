@@ -12,8 +12,8 @@ import { useAppSelector } from '../../hooks/redux';
 import Bar from '../Bar';
 import Container from '../Container';
 import Error from '../Error';
+import Header from '../Header';
 import NotFound from '../NotFound';
-import Search from '../Search';
 import Separator from '../Separator';
 import SkeletonBar from '../SkeletonBar';
 import SortModal from '../SortModal';
@@ -26,13 +26,10 @@ interface WrapperProps {
 const Wrapper = ({ children }: WrapperProps) => {
   return (
     <>
+      <Header />
       <Container>
         <div className={styles.home}>
-          <header className={styles.home__header}>
-            <h1 className={styles.home__title}>Поиск</h1>
-            <Search className={styles.home__search} />
-            <Tabs />
-          </header>
+          <Tabs className={styles.home__tabs} />
           <main className={styles.home__users}>{children}</main>
         </div>
       </Container>

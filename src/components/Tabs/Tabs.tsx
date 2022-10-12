@@ -10,23 +10,31 @@ import { selectActiveTab } from '../../features/Home/selectors';
 
 import { setActiveTab } from '../../features/Home/slice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import useNetwork from '../../hooks/useNetwork';
 import { DepartmentType, User } from '../../types/default';
+import { AbortPromise } from '../../types/other';
 import { departmentText } from '../../types/text';
 
 const tabs = Object.keys(departmentText) as DepartmentType[];
 
-const Tabs = () => {
-  const [fetchPromise, setFetchPromise] = useState<
-    ReturnType<AsyncThunkAction<User[], string, {}>> | undefined
-  >();
+interface Props {
+  className?: string;
+}
+
+const Tabs = ({ className }: Props) => {
+  const [fetchPromise, setFetchPromise] = useState<AbortPromise>();
   const activeTab = useAppSelector(selectActiveTab);
+  const onLine = useNetwork();
   const dispatch = useAppDispatch();
+
+  const classes = classNames(styles.tabs, className);
 
   const tabElements = tabs.map((tab, idx) => {
     const optionalClass = {
       [styles.active]: tab === activeTab,
     };
-    const classes = classNames(styles.tabs__item, optionalClass);
+
+    const itemClasses = classNames(styles.tabs__item, optionalClass);
 
     const onClick = () => {
       dispatch(setActiveTab(tab));
@@ -44,13 +52,18 @@ const Tabs = () => {
     };
 
     return (
-      <div className={classes} key={idx} onClick={onClick}>
+      <button
+        className={itemClasses}
+        key={idx}
+        onClick={onClick}
+        disabled={!onLine}
+      >
         {departmentText[tab]}
-      </div>
+      </button>
     );
   });
 
-  return <div className={styles.tabs}>{tabElements}</div>;
+  return <div className={classes}>{tabElements}</div>;
 };
 
 export default Tabs;

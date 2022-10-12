@@ -1,12 +1,11 @@
 .tabs {
   display: flex;
+
+  padding-top: 4px;
 }
 
 .tabs__item {
-  cursor: pointer;
-  user-select: none;
-
-  padding: 8px 12px;
+  padding: 12px 12px 8px;
 
   font-size: 15px;
   font-weight: 500;
@@ -17,6 +16,10 @@
   &:hover {
     color: #737375;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .tabs__item.active {
@@ -24,4 +27,8 @@
   color: var(--black);
 
   border-bottom: 2px solid var(--purple);
+
+  &:disabled {
+    cursor: pointer;
+  }
 }

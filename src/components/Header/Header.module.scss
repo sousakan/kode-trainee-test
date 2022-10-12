@@ -1,0 +1,50 @@
+.header {
+  position: relative;
+
+  padding: 16px;
+  padding-bottom: 10px;
+}
+
+.header.offline,
+.header.connecting {
+  position: relative;
+
+  padding-bottom: 20px;
+}
+
+.header.offline {
+  background-color: #f44336;
+}
+
+.header.connecting {
+  background-color: var(--purple);
+}
+
+.header__title {
+  margin-bottom: 12px;
+  padding: 0 8px;
+
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.header.offline .header__title,
+.header.connecting .header__title {
+  margin-bottom: 20px;
+
+  color: var(--white);
+}
+
+.header__search {
+  margin-bottom: 5px;
+}
+
+.header__offline-text,
+.header__connecting-text {
+  padding: 0 8px;
+
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+}

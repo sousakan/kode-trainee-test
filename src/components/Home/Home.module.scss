@@ -1,8 +1,7 @@
-.home__header {
+.home__tabs {
   position: relative;
 
-  padding: 16px;
-  padding-bottom: 0;
+  padding: 0 16px;
 
   &::after {
     content: '';
@@ -18,18 +17,6 @@
 
     background-color: #e4e2e2;
   }
-}
-
-.home__title {
-  margin-bottom: 12px;
-
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--black);
-}
-
-.home__search {
-  margin-bottom: 5px;
 }
 
 .home__users {
