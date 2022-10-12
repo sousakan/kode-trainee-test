@@ -9,6 +9,7 @@ import {
 } from '../../features/Home/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useNetwork from '../../hooks/useNetwork';
+import { DepartmentType } from '../../types/default';
 import Container from '../Container';
 import Search from '../Search';
 
@@ -45,7 +46,11 @@ const connectElement = (
 
 type StatusType = 'offline' | 'connecting' | 'online';
 
-const Header = () => {
+interface Props {
+  updateDep: (dep: DepartmentType) => void;
+}
+
+const Header = ({ updateDep }: Props) => {
   const dispatch = useAppDispatch();
   const loadingStatus = useAppSelector(selectLoadingStatus);
   const activeTab = useAppSelector(selectActiveTab);
@@ -66,7 +71,7 @@ const Header = () => {
     if (prevOnLine.current !== onLine && onLine) {
       setStatus('connecting');
 
-      dispatch(fetchUsersByDep(activeTab));
+      updateDep(activeTab);
 
       prevOnLine.current = true;
       prevLoadStatus.current = 'pending';
@@ -84,7 +89,7 @@ const Header = () => {
       prevOnLine.current = true;
       prevLoadStatus.current = 'success';
     }
-  }, [dispatch, activeTab, onLine, loadingStatus]);
+  }, [dispatch, activeTab, onLine, loadingStatus, updateDep]);
 
   switch (status) {
     case 'offline':

@@ -1,5 +1,8 @@
+import { useRef } from 'react';
+
 import styles from './Home.module.scss';
 
+import { fetchUsersByDep } from '../../features/Home/asyncActions';
 import {
   selectLoadingStatus,
   selectSearchValue,
@@ -8,7 +11,9 @@ import {
 } from '../../features/Home/selectors';
 import separateUsers from '../../helpers/separateUsers';
 import sortUsers from '../../helpers/sortUsers';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { DepartmentType } from '../../types/default';
+import { AbortPromise } from '../../types/other';
 import Bar from '../Bar';
 import Container from '../Container';
 import Error from '../Error';
@@ -24,12 +29,22 @@ interface WrapperProps {
 }
 
 const Wrapper = ({ children }: WrapperProps) => {
+  const dispatch = useAppDispatch();
+  const abortPromise = useRef<AbortPromise>();
+
+  const updateDep = (dep: DepartmentType) => {
+    if (abortPromise.current) abortPromise.current.abort();
+
+    const promise = dispatch(fetchUsersByDep(dep));
+    abortPromise.current = promise;
+  };
+
   return (
     <>
-      <Header />
+      <Header updateDep={updateDep} />
       <Container>
         <div className={styles.home}>
-          <Tabs className={styles.home__tabs} />
+          <Tabs className={styles.home__tabs} updateDep={updateDep} />
           <main className={styles.home__users}>{children}</main>
         </div>
       </Container>

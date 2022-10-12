@@ -1,28 +1,23 @@
-import { AsyncThunkAction } from '@reduxjs/toolkit';
 import classNames from 'classnames';
-
-import { useState } from 'react';
 
 import styles from './Tabs.module.scss';
 
-import { fetchUsersByDep } from '../../features/Home/asyncActions';
 import { selectActiveTab } from '../../features/Home/selectors';
 
 import { setActiveTab } from '../../features/Home/slice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useNetwork from '../../hooks/useNetwork';
-import { DepartmentType, User } from '../../types/default';
-import { AbortPromise } from '../../types/other';
+import { DepartmentType } from '../../types/default';
 import { departmentText } from '../../types/text';
 
 const tabs = Object.keys(departmentText) as DepartmentType[];
 
 interface Props {
   className?: string;
+  updateDep: (dep: DepartmentType) => void;
 }
 
-const Tabs = ({ className }: Props) => {
-  const [fetchPromise, setFetchPromise] = useState<AbortPromise>();
+const Tabs = ({ className, updateDep }: Props) => {
   const activeTab = useAppSelector(selectActiveTab);
   const onLine = useNetwork();
   const dispatch = useAppDispatch();
@@ -41,14 +36,7 @@ const Tabs = ({ className }: Props) => {
 
       if (activeTab === tab) return;
 
-      if (fetchPromise) fetchPromise.abort();
-
-      const promise =
-        tab !== 'all'
-          ? dispatch(fetchUsersByDep(tab))
-          : dispatch(fetchUsersByDep('all'));
-
-      setFetchPromise(promise);
+      updateDep(tab);
     };
 
     return (
