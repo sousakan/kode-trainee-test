@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.search__focus {
+  border: 0;
+  outline: 0;
+}
+
 .search__input {
   position: relative;
 
@@ -17,6 +22,7 @@
   background-color: #f7f7f8;
   border: 0;
   border-radius: 16px;
+  outline: 0;
 
   &::placeholder {
     font-weight: 500;
@@ -38,6 +44,10 @@
 
 .search__search-icon {
   left: 12px;
+}
+
+.search__focus:focus-within .search__search-icon {
+  color: var(--black);
 }
 
 .search__sort-icon {

@@ -19,6 +19,7 @@ const Search = ({ className }: Props) => {
   const dispatch = useAppDispatch();
   const sortType = useAppSelector(selectSortType);
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchIconRef = useRef(null);
 
   const classes = classNames(styles.search, className);
   const sortIconClasses = classNames(styles['search__sort-icon'], {
@@ -42,16 +43,25 @@ const Search = ({ className }: Props) => {
     }
   };
 
+  const onClick = () => inputRef.current?.focus();
+
   return (
     <div className={classes}>
-      <input
-        ref={inputRef}
-        className={styles.search__input}
-        type="search"
-        placeholder="Введи имя, тег, почту..."
-        onChange={onChange}
-      />
-      <SearchIcon className={styles['search__search-icon']} />
+      <div className={styles.search__focus} tabIndex={0}>
+        <input
+          ref={inputRef}
+          className={styles.search__input}
+          type="search"
+          placeholder="Введи имя или тег..."
+          onChange={onChange}
+          tabIndex={-1}
+        />
+        <SearchIcon
+          className={styles['search__search-icon']}
+          ref={searchIconRef}
+          onClick={onClick}
+        />
+      </div>
       <SortIcon className={sortIconClasses} onClick={openModal} />
     </div>
   );
