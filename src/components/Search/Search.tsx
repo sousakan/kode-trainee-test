@@ -1,12 +1,15 @@
 import classNames from 'classnames';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import styles from './Search.module.scss';
 
 import { ReactComponent as SearchIcon } from '../../assets/icons/search_icon.svg';
 import { ReactComponent as SortIcon } from '../../assets/icons/search_sort_icon.svg';
-import { selectSortType } from '../../features/Home/selectors';
+import {
+  selectSearchValue,
+  selectSortType,
+} from '../../features/Home/selectors';
 import { setIdModalOpen, setSearchValue } from '../../features/Home/slice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import useDebounce from '../../hooks/useDebounce';
@@ -20,6 +23,8 @@ const Search = ({ className }: Props) => {
   const sortType = useAppSelector(selectSortType);
   const inputRef = useRef<HTMLInputElement>(null);
   const searchIconRef = useRef(null);
+  const searchValue = useAppSelector(selectSearchValue);
+  const [value, setValue] = useState(searchValue);
 
   const classes = classNames(styles.search, className);
   const sortIconClasses = classNames(styles['search__sort-icon'], {
@@ -40,6 +45,7 @@ const Search = ({ className }: Props) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (inputRef.current) {
       debUpdateValue(e.target.value);
+      setValue(e.target.value);
     }
   };
 
@@ -55,6 +61,7 @@ const Search = ({ className }: Props) => {
           placeholder="Введи имя или тег..."
           onChange={onChange}
           tabIndex={-1}
+          value={value}
         />
         <SearchIcon
           className={styles['search__search-icon']}
