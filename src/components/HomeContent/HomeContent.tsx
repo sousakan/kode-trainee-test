@@ -13,7 +13,6 @@ const HomeContent = () => {
   const {
     data: users = [],
     isFetching,
-    isSuccess,
     isError,
     refetch,
   } = useGetUsersByDepQuery(activeTab);
@@ -22,8 +21,6 @@ const HomeContent = () => {
     if (isFetching) return <Skeleton />;
 
     if (isError) return <Error refetch={refetch} />;
-
-    if (isSuccess && !users.length) return <NotFound />;
 
     return <Bars users={users} />;
   }

@@ -7,6 +7,7 @@ import sortUsers from '../../helpers/sortUsers';
 import { useAppSelector } from '../../hooks/redux';
 import { User } from '../../types/default';
 import Bar from '../Bar';
+import NotFound from '../NotFound';
 import Separator from '../Separator';
 
 interface Props {
@@ -41,6 +42,8 @@ const Bars = ({ users }: Props) => {
   }
 
   bars = sortedUsers.map((user) => <Bar key={user.id} user={user} />);
+
+  if (!bars.length) return <NotFound />;
 
   return <>{bars}</>;
 };
