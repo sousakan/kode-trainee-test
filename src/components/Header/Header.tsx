@@ -1,15 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import styles from './Header.module.scss';
 
-import { fetchUsersByDep } from '../../features/Home/asyncActions';
-import {
-  selectActiveTab,
-  selectLoadingStatus,
-} from '../../features/Home/selectors';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { selectActiveTab } from '../../features/Home/selectors';
+import { useAppSelector } from '../../hooks/redux';
 import useNetwork from '../../hooks/useNetwork';
-import { DepartmentType } from '../../types/default';
+import { useGetUsersByDepQuery } from '../../services/users';
 import Container from '../Container';
 import Search from '../Search';
 
@@ -44,61 +40,23 @@ const connectElement = (
   </header>
 );
 
-type StatusType = 'offline' | 'connecting' | 'online';
-
-interface Props {
-  updateDep: (dep: DepartmentType) => void;
-}
-
-const Header = ({ updateDep }: Props) => {
-  const dispatch = useAppDispatch();
-  const loadingStatus = useAppSelector(selectLoadingStatus);
+const Header = () => {
   const activeTab = useAppSelector(selectActiveTab);
-  const prevLoadStatus = useRef<typeof loadingStatus>('pending');
+  const { isFetching, isLoading } = useGetUsersByDepQuery(activeTab);
   const onLine = useNetwork();
   const prevOnLine = useRef(onLine);
+  const element = useRef<JSX.Element>();
 
-  const [status, setStatus] = useState<StatusType>('online');
+  element.current = onLine ? onLineElement : offLineElement;
 
-  useEffect(() => {
-    if (onLine) return;
-
-    setStatus('offline');
-    prevOnLine.current = false;
-  }, [onLine]);
+  if (isFetching && !isLoading && prevOnLine.current !== onLine)
+    element.current = connectElement;
 
   useEffect(() => {
-    if (prevOnLine.current !== onLine && onLine) {
-      setStatus('connecting');
+    prevOnLine.current = onLine;
+  }, [onLine, prevOnLine]);
 
-      updateDep(activeTab);
-
-      prevOnLine.current = true;
-      prevLoadStatus.current = 'pending';
-
-      return;
-    }
-
-    if (
-      prevLoadStatus.current === 'pending' &&
-      loadingStatus === 'success' &&
-      prevOnLine.current &&
-      onLine
-    ) {
-      setStatus('online');
-      prevOnLine.current = true;
-      prevLoadStatus.current = 'success';
-    }
-  }, [dispatch, activeTab, onLine, loadingStatus, updateDep]);
-
-  switch (status) {
-    case 'offline':
-      return offLineElement;
-    case 'connecting':
-      return connectElement;
-    case 'online':
-      return onLineElement;
-  }
+  return element.current;
 };
 
 export default Header;

@@ -14,13 +14,12 @@ const tabs = Object.keys(departmentText) as DepartmentType[];
 
 interface Props {
   className?: string;
-  updateDep: (dep: DepartmentType) => void;
 }
 
-const Tabs = ({ className, updateDep }: Props) => {
-  const activeTab = useAppSelector(selectActiveTab);
+const Tabs = ({ className }: Props) => {
   const onLine = useNetwork();
   const dispatch = useAppDispatch();
+  const activeTab = useAppSelector(selectActiveTab);
 
   const classes = classNames(styles.tabs, className);
 
@@ -34,9 +33,8 @@ const Tabs = ({ className, updateDep }: Props) => {
     const onClick = () => {
       dispatch(setActiveTab(tab));
 
-      if (activeTab === tab) return;
-
-      updateDep(tab);
+      // if (activeTab === tab) return;
+      // refetch();
     };
 
     return (

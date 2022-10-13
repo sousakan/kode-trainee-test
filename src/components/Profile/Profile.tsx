@@ -5,25 +5,21 @@ import styles from './Profile.module.scss';
 import { ReactComponent as BirthdayIcon } from '../../assets/icons/birthday_icon.svg';
 import { ReactComponent as BackIcon } from '../../assets/icons/go_back_icon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/phone_icon.svg';
-import {
-  selectLoadingStatus,
-  selectUsers,
-} from '../../features/Home/selectors';
+
 import calculateAge from '../../helpers/calculateAge';
 import formatTel from '../../helpers/formatTel';
 import getBirthDate from '../../helpers/getBirthDate';
-import { useAppSelector } from '../../hooks/redux';
+import { useGetUsersByDepQuery } from '../../services/users';
 import Loader from '../Loader';
 import NotFoundPage from '../NotFoundPage';
 
 const Profile = () => {
-  const users = useAppSelector(selectUsers);
-  const loadingStatus = useAppSelector(selectLoadingStatus);
+  const { data: users = [], isFetching } = useGetUsersByDepQuery('all');
 
   const { userId } = useParams();
   const user = users.find((u) => u.id === userId);
 
-  if (loadingStatus === 'pending') return <Loader />;
+  if (isFetching) return <Loader />;
 
   if (!user) return <NotFoundPage />;
 

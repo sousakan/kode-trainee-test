@@ -38,11 +38,11 @@ const SortModal = () => {
       <div className={styles['sort-modal__content']}>
         <header className={styles['sort-modal__header']}>
           <h2 className={styles['sort-modal__title']}>Сортировка</h2>
-          <button className={styles['sort-modal__close-button']}>
-            <CloseIcon
-              className={styles['sort-modal__close-icon']}
-              onClick={closeModal}
-            />
+          <button
+            className={styles['sort-modal__close-button']}
+            onClick={closeModal}
+          >
+            <CloseIcon className={styles['sort-modal__close-icon']} />
           </button>
         </header>
         <form className={styles['sort-modal__form']}>
